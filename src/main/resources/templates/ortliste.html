@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orte</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header th:insert="~{fragments/kopffuss :: header}"></header>
+    <main>
+        <h1 th:text="#{ortsliste.titel}">Ortliste</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ortsname</th>
+                    <th>Breite</th>
+                    <th>Länge</th>
+                    <th class="width-container-Ort">Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ort : ${orte}">
+                    <td th:text="${ort.name}"></td>
+                    <td th:text="${ort.geobreite}"></td>
+                    <td th:text="${ort.geolaenge}"></td>
+                    <td class="actions width-container-Ort">
+                        <span class="action-item"><a th:href="|https://www.openstreetmap.org/#map=14/${ort.geobreite}/${ort.geolaenge}|" class="karte">Karte</a></span>
+                        <span class="action-item"><a th:href="@{'/admin/ort/' + ${ort.id}}" class="edit">bearbeiten</a></span>
+                        <span class="action-item"><a th:href="@{'/admin/ort/' + ${ort.id} + '/del'}" class="delete">löschen</a></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/admin/ort/0}" class="button" th:text="#{ortsliste.neu}">Neuer Ort</a>
+    </main>
+    <footer th:insert="~{fragments/kopffuss :: footer}"></footer>
+</body>
+</html>

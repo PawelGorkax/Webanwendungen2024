@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragmente</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-item">
+            <img class="icon" src="/icon.png" alt="Icon">
+            <a class="index" th:href="@{/admin/benutzer}" th:text="#{kopf.benutzer}">Benutzer</a>
+        </div>
+        <div class="nav-item" sec:authorize="hasRole('CHEF')">
+            <img class="icon" src="/ort.png" alt="Ort Icon" th:if="${#authorization.expression('hasRole(''CHEF'')')}">
+            <a class="index" th:href="@{/admin/ort}" th:if="${#authorization.expression('hasRole(''CHEF'')')}" th:text="#{kopf.orte}">Orte</a>
+        </div>
+        <div class="nav-item">
+            <img class="icon" src="/city-tour.png" alt="Tour Icon">
+            <a class="index" th:href="@{/admin/tour}" th:text="#{kopf.touren}">Touren</a>
+        </div>
+
+        <ul class="liste rechts">
+            <li class="liste-item"><a class="link" th:href="@{?sprache=de}">DE</a></li>
+            <li class="liste-item"><a class="link" th:href="@{?sprache=en}">EN</a></li>
+            <li class="liste-item"><a class="link" th:href="@{?sprache=nl}">NL</a></li>
+            <li class="liste-item" sec:authorize="isAuthenticated()">
+                <a class="link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </header>
+   
+    <footer class="footer">
+        <div class="wrapper">
+            <ul class="liste">
+                <li class="liste-item"><a href="#" class="link" th:text="#{fuss.impressum}"></a></li>
+                <li class="liste-item" sec:authorize="isAuthenticated()">
+                    Eingeloggt als: <span sec:authentication="name"></span>
+                </li>
+                <li class="liste-item"><a href="#" class="link" th:text="#{fuss.kontakt}"></a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Benutzerliste</title>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header th:insert="~{fragments/kopffuss :: header}"></header>
+    <main>
+        <h1 th:text="#{benutzerliste.titel}">Benutzerliste</h1>
+        <div th:if="${info}" class="info" th:text="${info}"></div>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Geburtsdatum</th>
+                        <th class="width-container">Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="benutzer : ${benutzerListe}">
+                        <td th:text="${benutzer.id}"></td>
+                        <td th:replace="~{fragments/benutzerliste-zeile :: feldausgeben(benutzerid=${benutzer.id}, feldname='name', wert=${benutzer.name})}"></td>
+                        <td th:replace="~{fragments/benutzerliste-zeile :: feldausgeben(benutzerid=${benutzer.id}, feldname='email', wert=${benutzer.email})}"></td>
+                        <td th:text="${benutzer.geburtsdatum}"></td>
+                        <td class="actions width-container">
+                            <span class="action-item"><a th:href="@{'/admin/benutzer/' + ${benutzer.id}}" class="edit">bearbeiten</a></span>
+                            <span class="action-item"><a th:href="@{'/admin/benutzer/' + ${benutzer.id} + '/del'}" class="delete">löschen</a></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        
+        <a th:href="@{/admin/benutzer/0}" class="button" th:text="#{benutzerliste.neu}">Neuer Benutzer</a>
+    </main>
+    <footer th:insert="~{fragments/kopffuss :: footer}"></footer>
+</body>
+</html>

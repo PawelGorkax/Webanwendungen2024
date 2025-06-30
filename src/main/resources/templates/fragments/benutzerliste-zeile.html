@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Benutzerliste Zeile</title>
+</head>
+<body>
+
+    <div th:fragment="feldausgeben(benutzerid, feldname, wert)">
+        <td>
+            <span th:text="${wert}"
+                  th:hx-get="@{/benutzer/{id}/hx/feld/{feldname}(id=${benutzerid}, feldname=${feldname})}"
+                  th:hx-swap="outerHTML"></span>
+        </td>
+    </div>
+
+    <div th:fragment="feldbearbeiten(benutzerid, feldname, wert)">
+        <td>
+            <form th:action="@{/benutzer/{id}/hx/feld/update/{feldname}(id=${benutzerid}, feldname=${feldname})}" th:method="put" th:hx-swap="outerHTML">
+                <input type="hidden" name="benutzerid" th:value="${benutzerid}" />
+                <input type="hidden" name="feldname" th:value="${feldname}" />
+                <input type="text" name="wert" th:value="${wert}" />
+                <button type="submit">OK</button>
+            </form>
+        </td>
+    </div>
+
+</body>
+</html>
+
+
+
+   

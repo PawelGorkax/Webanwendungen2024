@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Touren</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header th:insert="~{fragments/kopffuss :: header}"></header>
+    <main>
+        <h1 th:text="#{tourliste.titel}">Ortliste</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Anbieter</th>
+                    <th>Abfahrzeitpunkt</th>
+                    <th>Preis</th>
+                    <th>Plätze</th>
+                    <th>Startort</th>
+                    <th>Zielort</th>
+                    <th class="width-container" >Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="tour : ${touren}">
+                    <td th:text="${tour.id}"></td>
+                    <td th:text="${tour.anbieter.name}"></td>
+                    <td th:text="${tour.abfahrDateTime}"></td>
+                    <td th:text="${tour.preis}"></td>
+                    <td th:text="${tour.plaetze}"></td>
+                    <td th:text="${tour.startOrt.name}"></td>
+                    <td th:text="${tour.zielOrt.name}"></td>
+                    <td class="actions width-container">
+                        <span class="action-item"><a th:href="@{'/admin/tour/' + ${tour.id}}" class="edit">bearbeiten</a></span>
+                        <span class="action-item"><a th:href="@{'/admin/tour/' + ${tour.id} + '/del'}" class="delete">löschen</a></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/admin/tour/0}" class="button" th:text="#{tourliste.neu}">Neue Tour</a>
+    </main>
+    <footer th:insert="~{fragments/kopffuss :: footer}"></footer>
+</body>
+</html>

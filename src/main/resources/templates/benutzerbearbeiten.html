@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Benutzer bearbeiten - ID ' + ${benutzerId}">Benutzer bearbeiten</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header th:insert="~{fragments/kopffuss :: header}"></header>
+    <div class="wrapper">
+        <h1 th:text="#{benutzerprofil.titel.neu} + ${benutzerId}">Benutzerprofil bearbeiten</h1>
+        <form th:method="POST" th:action="@{#}" th:object="${profil}">
+            <div class="form-group">
+                <label for="name" th:text="#{benutzer.name}"></label>
+                <input class="formular" type="text" id="name" th:field="*{name}" th:errorclass="form-error">
+                <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="email" th:text="#{benutzer.email}"></label>
+                <input class="formular" type="text" id="email" th:field="*{email}" th:errorclass="form-error">
+                <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="passwort" th:text="#{benutzer.passwort}"></label>
+                <input class="formular" type="password" id="passwort" th:field="*{passwort}" th:errorclass="form-error">
+                <p class="error" th:if="${#fields.hasErrors('passwort')}" th:errors="*{passwort}"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="geburtsdatum" th:text="#{benutzer.geburtstag}"></label>
+                <input class="formular" type="date" id="geburtsdatum" th:field="*{geburtsdatum}" th:errorclass="form-error">
+                <p class="error" th:if="${#fields.hasErrors('geburtsdatum')}" th:errors="*{geburtsdatum}"></p>
+            </div>
+
+            <div class="preferences">
+                <div class="form-group like">
+                    <label for="wunschListe" th:text="#{benutzer.magich}"></label><br>
+                    <input class="formular" type="text" placeholder="Geben Sie an was Sie mögen" th:field="*{wunschListe}" th:if="${#lists.size(profil.wunschListe)} < ${MAXWUNSCH}">
+                    <ul>
+                        <li th:each="element:${profil.wunschListe}">
+                            <span th:text="${element}"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group notLike">
+                    <label for="hassListe" th:text="#{benutzer.magichnicht}"></label><br>
+                    <input class="formular" type="text" placeholder="Geben Sie an was Sie nicht mögen" th:field="*{hassListe}" th:if="${#lists.size(profil.hassListe)} < ${MAXWUNSCH}">
+                    <ul>
+                        <li th:each="element:${profil.hassListe}">
+                            <span th:text="${element}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <input class="button" type="submit" th:value="#{benutzer.button}">
+        </form>
+    </div>
+    <footer th:insert="~{fragments/kopffuss :: footer}"></footer>
+</body>
+</html>
